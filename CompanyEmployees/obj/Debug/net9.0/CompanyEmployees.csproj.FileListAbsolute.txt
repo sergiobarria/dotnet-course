@@ -31,3 +31,16 @@
 /Users/sergiobarria/RiderProjects/CompanyEmployees/CompanyEmployees/obj/Debug/net9.0/CompanyEmployees.pdb
 /Users/sergiobarria/RiderProjects/CompanyEmployees/CompanyEmployees/obj/Debug/net9.0/CompanyEmployees.genruntimeconfig.cache
 /Users/sergiobarria/RiderProjects/CompanyEmployees/CompanyEmployees/obj/Debug/net9.0/ref/CompanyEmployees.dll
+/Users/sergiobarria/RiderProjects/CompanyEmployees/CompanyEmployees/bin/Debug/net9.0/Microsoft.Extensions.DependencyModel.dll
+/Users/sergiobarria/RiderProjects/CompanyEmployees/CompanyEmployees/bin/Debug/net9.0/Serilog.dll
+/Users/sergiobarria/RiderProjects/CompanyEmployees/CompanyEmployees/bin/Debug/net9.0/Serilog.AspNetCore.dll
+/Users/sergiobarria/RiderProjects/CompanyEmployees/CompanyEmployees/bin/Debug/net9.0/Serilog.Extensions.Hosting.dll
+/Users/sergiobarria/RiderProjects/CompanyEmployees/CompanyEmployees/bin/Debug/net9.0/Serilog.Extensions.Logging.dll
+/Users/sergiobarria/RiderProjects/CompanyEmployees/CompanyEmployees/bin/Debug/net9.0/Serilog.Formatting.Compact.dll
+/Users/sergiobarria/RiderProjects/CompanyEmployees/CompanyEmployees/bin/Debug/net9.0/Serilog.Settings.Configuration.dll
+/Users/sergiobarria/RiderProjects/CompanyEmployees/CompanyEmployees/bin/Debug/net9.0/Serilog.Sinks.Console.dll
+/Users/sergiobarria/RiderProjects/CompanyEmployees/CompanyEmployees/bin/Debug/net9.0/Serilog.Sinks.Debug.dll
+/Users/sergiobarria/RiderProjects/CompanyEmployees/CompanyEmployees/bin/Debug/net9.0/Serilog.Sinks.File.dll
+/Users/sergiobarria/RiderProjects/CompanyEmployees/CompanyEmployees/bin/Debug/net9.0/LoggingService.dll
+/Users/sergiobarria/RiderProjects/CompanyEmployees/CompanyEmployees/bin/Debug/net9.0/LoggingService.pdb
+/Users/sergiobarria/RiderProjects/CompanyEmployees/CompanyEmployees/bin/Debug/net9.0/Serilog.Sinks.Seq.dll

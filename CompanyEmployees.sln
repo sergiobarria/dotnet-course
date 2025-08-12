@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompanyEmployees", "CompanyEmployees\CompanyEmployees.csproj", "{35D962AD-7AA5-43D1-8201-043AF4A5FBC2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggingService", "LoggingService\LoggingService.csproj", "{AEC0DC39-5C55-48DB-856A-F197407E6A05}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{35D962AD-7AA5-43D1-8201-043AF4A5FBC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35D962AD-7AA5-43D1-8201-043AF4A5FBC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35D962AD-7AA5-43D1-8201-043AF4A5FBC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AEC0DC39-5C55-48DB-856A-F197407E6A05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEC0DC39-5C55-48DB-856A-F197407E6A05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEC0DC39-5C55-48DB-856A-F197407E6A05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEC0DC39-5C55-48DB-856A-F197407E6A05}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

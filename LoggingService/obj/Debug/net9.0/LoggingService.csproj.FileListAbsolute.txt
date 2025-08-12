@@ -1,0 +1,12 @@
+/Users/sergiobarria/RiderProjects/CompanyEmployees/LoggingService/bin/Debug/net9.0/LoggingService.deps.json
+/Users/sergiobarria/RiderProjects/CompanyEmployees/LoggingService/bin/Debug/net9.0/LoggingService.dll
+/Users/sergiobarria/RiderProjects/CompanyEmployees/LoggingService/bin/Debug/net9.0/LoggingService.pdb
+/Users/sergiobarria/RiderProjects/CompanyEmployees/LoggingService/obj/Debug/net9.0/LoggingService.csproj.AssemblyReference.cache
+/Users/sergiobarria/RiderProjects/CompanyEmployees/LoggingService/obj/Debug/net9.0/LoggingService.GeneratedMSBuildEditorConfig.editorconfig
+/Users/sergiobarria/RiderProjects/CompanyEmployees/LoggingService/obj/Debug/net9.0/LoggingService.AssemblyInfoInputs.cache
+/Users/sergiobarria/RiderProjects/CompanyEmployees/LoggingService/obj/Debug/net9.0/LoggingService.AssemblyInfo.cs
+/Users/sergiobarria/RiderProjects/CompanyEmployees/LoggingService/obj/Debug/net9.0/LoggingService.csproj.CoreCompileInputs.cache
+/Users/sergiobarria/RiderProjects/CompanyEmployees/LoggingService/obj/Debug/net9.0/LoggingService.dll
+/Users/sergiobarria/RiderProjects/CompanyEmployees/LoggingService/obj/Debug/net9.0/refint/LoggingService.dll
+/Users/sergiobarria/RiderProjects/CompanyEmployees/LoggingService/obj/Debug/net9.0/LoggingService.pdb
+/Users/sergiobarria/RiderProjects/CompanyEmployees/LoggingService/obj/Debug/net9.0/ref/LoggingService.dll
