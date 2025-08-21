@@ -1,4 +1,5 @@
 using AutoMapper;
+using CompanyEmployees.Core.Domain.Entities;
 using CompanyEmployees.Core.Domain.Exceptions;
 using CompanyEmployees.Core.Domain.Repositories;
 using CompanyEmployees.Core.Services.Abstractions;
@@ -26,5 +27,44 @@ internal sealed class CompanyService(IRepositoryManager repository, ILoggerManag
         var companyDto = mapper.Map<CompanyDto>(company);
 
         return companyDto;
+    }
+
+    public IEnumerable<CompanyDto> GetByIds(IEnumerable<Guid> ids, bool trackChanges)
+    {
+        if (ids is null) throw new IdParametersBadRequestException();
+
+        var companyEntities = repository.Company.GetByIds(ids, trackChanges);
+        if (ids.Count() != companyEntities.Count()) throw new CollectionByIdsBadRequestException();
+
+        var companiesToReturn = mapper.Map<IEnumerable<CompanyDto>>(companyEntities);
+
+        return companiesToReturn;
+    }
+
+    public (IEnumerable<CompanyDto> companies, string ids) CreateCompanyCollection(
+        IEnumerable<CompanyForCreationDto> companyCollection)
+    {
+        if (companyCollection is null) throw new CompanyCollectionBadRequest();
+
+        var companyEntities = mapper.Map<IEnumerable<Company>>(companyCollection);
+        foreach (var company in companyEntities) repository.Company.CreateCompany(company);
+        repository.Save();
+
+        var companyCollectionToReturn = mapper.Map<IEnumerable<CompanyDto>>(companyEntities);
+        var ids = string.Join(",", companyCollectionToReturn.Select(c => c.Id));
+
+        return (companies: companyCollectionToReturn, ids);
+    }
+
+    public CompanyDto CreateCompany(CompanyForCreationDto company)
+    {
+        var companyEntity = mapper.Map<Company>(company);
+
+        repository.Company.CreateCompany(companyEntity);
+        repository.Save();
+
+        var companyToReturn = mapper.Map<CompanyDto>(companyEntity);
+
+        return companyToReturn;
     }
 }

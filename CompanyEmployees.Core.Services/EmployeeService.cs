@@ -1,4 +1,5 @@
 using AutoMapper;
+using CompanyEmployees.Core.Domain.Entities;
 using CompanyEmployees.Core.Domain.Exceptions;
 using CompanyEmployees.Core.Domain.Repositories;
 using CompanyEmployees.Core.Services.Abstractions;
@@ -32,5 +33,21 @@ internal sealed class EmployeeService(IRepositoryManager repository, ILoggerMana
         var employee = mapper.Map<EmployeeDto>(employeeFromDb);
 
         return employee;
+    }
+
+    public EmployeeDto CreateEmployeeForCompany(Guid companyId, EmployeeForCreationDto employeeForCreation,
+        bool trackChanges)
+    {
+        var company = repository.Company.GetCompany(companyId, trackChanges);
+        if (company is null) throw new CompanyNotFoundException(companyId);
+
+        var employeeEntity = mapper.Map<Employee>(employeeForCreation);
+
+        repository.Employee.CreateEmployeeForCompany(companyId, employeeEntity);
+        repository.Save();
+
+        var employeeToReturn = mapper.Map<EmployeeDto>(employeeEntity);
+
+        return employeeToReturn;
     }
 }

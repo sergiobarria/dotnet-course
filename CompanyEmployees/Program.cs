@@ -2,6 +2,7 @@ using CompanyEmployees;
 using CompanyEmployees.Extensions;
 using CompanyEmployees.Infrastructure.Presentation;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Mvc;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +18,10 @@ builder.Services.AddOpenApi();
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = true; // Allows to set custom validation errors.
+});
 builder.Services.AddControllers(config =>
     {
         config.RespectBrowserAcceptHeader = true;

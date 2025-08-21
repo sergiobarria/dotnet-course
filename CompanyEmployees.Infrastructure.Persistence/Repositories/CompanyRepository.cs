@@ -15,4 +15,15 @@ internal sealed class CompanyRepository(RepositoryContext repositoryContext)
     {
         return FindByCondition(c => c.Id.Equals(companyId), trackChanges).SingleOrDefault()!;
     }
+
+    public IEnumerable<Company> GetByIds(IEnumerable<Guid> ids, bool trackChanges)
+    {
+        return FindByCondition(x => ids.Contains(x.Id), trackChanges)
+            .ToList();
+    }
+
+    public void CreateCompany(Company company)
+    {
+        Create(company);
+    }
 }
