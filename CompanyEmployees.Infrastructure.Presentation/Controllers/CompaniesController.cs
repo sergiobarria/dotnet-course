@@ -10,7 +10,6 @@ public class CompaniesController(IServiceManager service) : ControllerBase
     [HttpGet]
     public IActionResult GetCompanies()
     {
-        throw new Exception("Exception");
         var companies = service.CompanyService.GetAllCompanies(false);
 
         return Ok(companies);
