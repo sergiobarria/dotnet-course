@@ -5,7 +5,7 @@ namespace CompanyEmployees.Infrastructure.Presentation.Controllers;
 
 [Route("api/companies")]
 [ApiController]
-public class CompaniesController(IServiceManager service) : ControllerBase
+public class CompanyController(IServiceManager service) : ControllerBase
 {
     [HttpGet]
     public IActionResult GetCompanies()
@@ -13,5 +13,13 @@ public class CompaniesController(IServiceManager service) : ControllerBase
         var companies = service.CompanyService.GetAllCompanies(false);
 
         return Ok(companies);
+    }
+
+    [HttpGet("{id:guid}")]
+    public IActionResult GetCompany(Guid id)
+    {
+        var company = service.CompanyService.GetCompany(id, false);
+
+        return Ok(company);
     }
 }

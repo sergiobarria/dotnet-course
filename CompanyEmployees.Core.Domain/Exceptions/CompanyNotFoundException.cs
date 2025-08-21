@@ -1,0 +1,7 @@
+namespace CompanyEmployees.Core.Domain.Exceptions;
+
+public class CompanyNotFoundException(Guid companyId)
+    : NotFoundException($"The company with id: {companyId} doesn't exist in the database.")
+{
+    // ...
+}
