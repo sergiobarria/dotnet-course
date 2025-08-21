@@ -1,4 +1,5 @@
 using CompanyEmployees.Extensions;
+using CompanyEmployees.Infrastructure.Presentation;
 using Microsoft.AspNetCore.HttpOverrides;
 using Serilog;
 
@@ -10,8 +11,10 @@ builder.Services.ConfigureLoggerService();
 builder.Services.ConfigureSqlContext(builder.Configuration);
 builder.Services.ConfigureRepositoryManager();
 builder.Services.ConfigureServiceManager();
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddApplicationPart(typeof(AssemblyReference).Assembly);
 builder.Services.AddOpenApi();
+builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Host.UseSerilog((hostContext, configuration) =>
 {
