@@ -4,5 +4,5 @@ namespace CompanyEmployees.Core.Domain.Repositories;
 
 public interface ICompanyRepository
 {
-    IEnumerable<Company> GetallCompanies(bool trackChanges);
+    IEnumerable<Company> GetAllCompanies(bool trackChanges);
 }

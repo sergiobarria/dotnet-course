@@ -6,7 +6,7 @@ namespace CompanyEmployees.Infrastructure.Persistence.Repositories;
 internal sealed class CompanyRepository(RepositoryContext repositoryContext)
     : RepositoryBase<Company>(repositoryContext), ICompanyRepository
 {
-    public IEnumerable<Company> GetallCompanies(bool trackChanges)
+    public IEnumerable<Company> GetAllCompanies(bool trackChanges)
     {
         return FindAll(trackChanges).OrderBy(c => c.Name).ToList();
     }

@@ -11,7 +11,7 @@ internal sealed class CompanyService(IRepositoryManager repository, ILoggerManag
 {
     public IEnumerable<CompanyDto> GetAllCompanies(bool trackChanges)
     {
-        var companies = repository.Company.GetallCompanies(trackChanges);
+        var companies = repository.Company.GetAllCompanies(trackChanges);
         var companiesDto = mapper.Map<IEnumerable<CompanyDto>>(companies);
 
         return companiesDto;
