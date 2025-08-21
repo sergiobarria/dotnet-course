@@ -1,3 +1,4 @@
+using CompanyEmployees;
 using CompanyEmployees.Extensions;
 using CompanyEmployees.Infrastructure.Presentation;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -11,10 +12,13 @@ builder.Services.ConfigureLoggerService();
 builder.Services.ConfigureSqlContext(builder.Configuration);
 builder.Services.ConfigureRepositoryManager();
 builder.Services.ConfigureServiceManager();
-builder.Services.AddControllers()
-    .AddApplicationPart(typeof(AssemblyReference).Assembly);
+
 builder.Services.AddOpenApi();
 builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
+builder.Services.AddControllers()
+    .AddApplicationPart(typeof(AssemblyReference).Assembly);
 
 builder.Host.UseSerilog((hostContext, configuration) =>
 {
@@ -23,15 +27,12 @@ builder.Host.UseSerilog((hostContext, configuration) =>
 
 var app = builder.Build();
 
+app.UseExceptionHandler(opt => { });
+
 if (app.Environment.IsDevelopment())
-{
-    app.UseDeveloperExceptionPage();
     app.MapOpenApi();
-}
 else
-{
     app.UseHsts();
-}
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

@@ -11,17 +11,9 @@ internal sealed class CompanyService(IRepositoryManager repository, ILoggerManag
 {
     public IEnumerable<CompanyDto> GetAllCompanies(bool trackChanges)
     {
-        try
-        {
-            var companies = repository.Company.GetallCompanies(trackChanges);
-            var companiesDto = mapper.Map<IEnumerable<CompanyDto>>(companies);
+        var companies = repository.Company.GetallCompanies(trackChanges);
+        var companiesDto = mapper.Map<IEnumerable<CompanyDto>>(companies);
 
-            return companiesDto;
-        }
-        catch (Exception ex)
-        {
-            logger.LogError($"Something went wrong in the {nameof(GetAllCompanies)} service method {ex}");
-            throw;
-        }
+        return companiesDto;
     }
 }
