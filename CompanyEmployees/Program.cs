@@ -7,6 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.ConfigureCors();
 builder.Services.ConfigureIISIntegration();
 builder.Services.ConfigureLoggerService();
+builder.Services.ConfigureSqlContext(builder.Configuration);
+builder.Services.ConfigureRepositoryManager();
+builder.Services.ConfigureServiceManager();
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 

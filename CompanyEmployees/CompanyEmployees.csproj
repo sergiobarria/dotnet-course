@@ -8,9 +8,15 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.8"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.8">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\CompanyEmployees.Core.Services\CompanyEmployees.Core.Services.csproj"/>
+        <ProjectReference Include="..\CompanyEmployees.Infrastructure.Persistence\CompanyEmployees.Infrastructure.Persistence.csproj"/>
         <ProjectReference Include="..\LoggingService\LoggingService.csproj"/>
     </ItemGroup>
 
