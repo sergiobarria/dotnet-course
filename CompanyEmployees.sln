@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompanyEmployees", "CompanyEmployees\CompanyEmployees.csproj", "{B5E31B59-833E-4B1A-ADB4-0E4CD058480F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggingService", "LoggingService\LoggingService.csproj", "{944F3900-EB9B-4D20-AAE6-99F1F7EE7112}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{B5E31B59-833E-4B1A-ADB4-0E4CD058480F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B5E31B59-833E-4B1A-ADB4-0E4CD058480F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B5E31B59-833E-4B1A-ADB4-0E4CD058480F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{944F3900-EB9B-4D20-AAE6-99F1F7EE7112}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{944F3900-EB9B-4D20-AAE6-99F1F7EE7112}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{944F3900-EB9B-4D20-AAE6-99F1F7EE7112}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{944F3900-EB9B-4D20-AAE6-99F1F7EE7112}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
