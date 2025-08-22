@@ -17,6 +17,8 @@ internal sealed class EmployeeService(IRepositoryManager repository, ILoggerMana
         bool trackChanges,
         CancellationToken ct = default)
     {
+        if (!employeeParameters.ValidAgeRange) throw new MaxAgeRangeBadRequestException();
+
         await CheckIfCompanyExists(companyId, trackChanges, ct);
 
         var employeesWithMetaData =

@@ -17,7 +17,10 @@ public class EmployeeRepository(RepositoryContext repositoryContext)
         var page = Math.Max(1, employeeParameters.PageNumber);
         var size = Math.Max(1, employeeParameters.PageSize);
 
-        var baseQuery = FindByCondition(e => e.CompanyId == companyId, trackChanges).OrderBy(e => e.Name);
+        var baseQuery =
+            FindByCondition(
+                e => e.CompanyId == companyId && e.Age >= employeeParameters.MinAge &&
+                     e.Age <= employeeParameters.MaxAge, trackChanges).OrderBy(e => e.Name);
 
         var count = await baseQuery.CountAsync(ct);
 
