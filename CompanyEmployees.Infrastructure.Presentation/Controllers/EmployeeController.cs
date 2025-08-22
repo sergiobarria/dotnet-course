@@ -1,4 +1,5 @@
 using CompanyEmployees.Core.Services.Abstractions;
+using CompanyEmployees.Infrastructure.Presentation.ActionFilters;
 using FluentValidation;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -27,14 +28,14 @@ public class EmployeeController(IServiceManager service) : ControllerBase
     }
 
     [HttpPost]
+    [ServiceFilter(typeof(ValidationFilterAttribute))]
     public async Task<IActionResult> CreateEmployeeForCompany(Guid companyId,
-        [FromBody] EmployeeForCreationDto? employee,
+        [FromBody] EmployeeForCreationDto employee,
         [FromServices] IValidator<EmployeeForManipulationDto> validator, CancellationToken ct)
     {
-        if (employee is null) return BadRequest("Employee object is null");
-
-        var validationResult = await validator.ValidateAsync(employee, ct);
-        if (!validationResult.IsValid) return BadRequest(validationResult.Errors);
+        // NOTE: The validation is running in the ServiceFilter - ValidationFilterAttribute
+        // var validationResult = await validator.ValidateAsync(employee, ct);
+        // if (!validationResult.IsValid) return BadRequest(validationResult.Errors);
 
         // if (!ModelState.IsValid)
         // {
@@ -49,14 +50,14 @@ public class EmployeeController(IServiceManager service) : ControllerBase
     }
 
     [HttpPut("{id:guid}")]
+    [ServiceFilter(typeof(ValidationFilterAttribute))]
     public async Task<IActionResult> UpdateEmployeeForCompany(Guid companyId, Guid id,
-        [FromBody] EmployeeForUpdateDto? employee,
+        [FromBody] EmployeeForUpdateDto employee,
         [FromServices] IValidator<EmployeeForUpdateDto> validator, CancellationToken ct)
     {
-        if (employee is null) return BadRequest("Employee object is null");
-
-        var validationResult = await validator.ValidateAsync(employee, ct);
-        if (!validationResult.IsValid) return BadRequest(validationResult.Errors);
+        // NOTE: The validation is running in the ServiceFilter - ValidationFilterAttribute
+        // var validationResult = await validator.ValidateAsync(employee, ct);
+        // if (!validationResult.IsValid) return BadRequest(validationResult.Errors);
         // if (!ModelState.IsValid) return UnprocessableEntity(ModelState);
 
         await service.EmployeeService.UpdateEmployeeForCompanyAsync(companyId, id, employee, false, true, ct);

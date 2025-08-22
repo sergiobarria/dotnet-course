@@ -1,4 +1,5 @@
 using CompanyEmployees.Core.Services.Abstractions;
+using CompanyEmployees.Infrastructure.Presentation.ActionFilters;
 using CompanyEmployees.Infrastructure.Presentation.ModelBinders;
 using Microsoft.AspNetCore.Mvc;
 using Shared.DataTransferObjects;
@@ -36,11 +37,10 @@ public class CompanyController(IServiceManager service) : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateCompany([FromBody] CompanyForCreationDto? company,
+    [ServiceFilter(typeof(ValidationFilterAttribute))]
+    public async Task<IActionResult> CreateCompany([FromBody] CompanyForCreationDto company,
         CancellationToken ct)
     {
-        if (company is null) return BadRequest("Company is null");
-
         var createdCompany = await service.CompanyService.CreateCompanyAsync(company, ct);
 
         return CreatedAtRoute("CompanyById", new { id = createdCompany.Id }, createdCompany);
@@ -56,11 +56,10 @@ public class CompanyController(IServiceManager service) : ControllerBase
     }
 
     [HttpPut("{id:guid}")]
-    public async Task<IActionResult> UpdateCompany(Guid id, [FromBody] CompanyForUpdateDto? companyForUpdate,
+    [ServiceFilter(typeof(ValidationFilterAttribute))]
+    public async Task<IActionResult> UpdateCompany(Guid id, [FromBody] CompanyForUpdateDto companyForUpdate,
         CancellationToken ct)
     {
-        if (companyForUpdate is null) return BadRequest("CompanyForUpdate is null");
-
         await service.CompanyService.UpdateCompanyAsync(id, companyForUpdate, true, ct);
 
         return NoContent();
