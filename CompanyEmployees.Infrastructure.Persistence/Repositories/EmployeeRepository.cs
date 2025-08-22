@@ -1,6 +1,7 @@
 using CompanyEmployees.Core.Domain.Entities;
 using CompanyEmployees.Core.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Shared.RequestFeatures;
 
 namespace CompanyEmployees.Infrastructure.Persistence.Repositories;
 
@@ -9,12 +10,23 @@ public class EmployeeRepository(RepositoryContext repositoryContext)
 {
     private readonly RepositoryContext _repositoryContext = repositoryContext;
 
-    public async Task<IEnumerable<Employee>> GetEmployeesAsync(Guid companyId, bool trackChanges,
+    public async Task<PagedList<Employee>> GetEmployeesAsync(Guid companyId, EmployeeParameters employeeParameters,
+        bool trackChanges,
         CancellationToken ct = default)
     {
-        return await FindByCondition(e => e.CompanyId.Equals(companyId), trackChanges)
-            .OrderBy(e => e.Name)
+        var page = Math.Max(1, employeeParameters.PageNumber);
+        var size = Math.Max(1, employeeParameters.PageSize);
+
+        var baseQuery = FindByCondition(e => e.CompanyId == companyId, trackChanges).OrderBy(e => e.Name);
+
+        var count = await baseQuery.CountAsync(ct);
+
+        var items = await baseQuery.Skip((page - 1) * size)
+            .Take(size)
             .ToListAsync(ct);
+
+        return PagedList<Employee>
+            .ToPagedList(items, count, employeeParameters.PageNumber, employeeParameters.PageSize);
     }
 
     public async Task<Employee?> GetEmployeeAsync(Guid companyId, Guid id, bool trackChanges,
