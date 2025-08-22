@@ -5,23 +5,12 @@ using CompanyEmployees.Infrastructure.Presentation.Validators;
 using FluentValidation;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Formatters;
-using Microsoft.Extensions.Options;
 using Serilog;
-
-NewtonsoftJsonPatchInputFormatter GetJsonPatchInputFormatter()
-{
-    return new ServiceCollection().AddLogging().AddMvc()
-        .AddNewtonsoftJson()
-        .Services.BuildServiceProvider()
-        .GetRequiredService<IOptions<MvcOptions>>().Value.InputFormatters
-        .OfType<NewtonsoftJsonPatchInputFormatter>().First();
-}
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.ConfigureCors();
-builder.Services.ConfigureIISIntegration();
+builder.Services.ConfigureIisIntegration();
 builder.Services.ConfigureLoggerService();
 builder.Services.ConfigureSqlContext(builder.Configuration);
 builder.Services.ConfigureRepositoryManager();
@@ -39,10 +28,10 @@ builder.Services.AddControllers(config =>
     {
         config.RespectBrowserAcceptHeader = true;
         config.ReturnHttpNotAcceptable = true;
-        config.InputFormatters.Insert(0, GetJsonPatchInputFormatter());
     })
     .AddXmlDataContractSerializerFormatters()
-    .AddCustomCSVFormatter()
+    .AddCustomCsvFormatter()
+    .AddNewtonsoftJson()
     .AddApplicationPart(typeof(AssemblyReference).Assembly);
 
 builder.Services.AddValidatorsFromAssemblyContaining(typeof(EmployeeForCreationDtoValidator));

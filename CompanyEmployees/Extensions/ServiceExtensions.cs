@@ -26,7 +26,7 @@ public static class ServiceExtensions
             opts.UseSqlServer(configuration.GetConnectionString("sqlConnection")));
     }
 
-    public static void ConfigureIISIntegration(this IServiceCollection services)
+    public static void ConfigureIisIntegration(this IServiceCollection services)
     {
         services.Configure<IISOptions>(options =>
         {
@@ -49,7 +49,7 @@ public static class ServiceExtensions
         services.AddScoped<IServiceManager, ServiceManager>();
     }
 
-    public static IMvcBuilder AddCustomCSVFormatter(this IMvcBuilder builder)
+    public static IMvcBuilder AddCustomCsvFormatter(this IMvcBuilder builder)
     {
         return builder.AddMvcOptions(config => config.OutputFormatters.Add(new CsvOutputFormatter()));
     }
