@@ -1,4 +1,5 @@
 using CompanyEmployees.Core.Services.Abstractions;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Shared.DataTransferObjects;
 
@@ -33,6 +34,32 @@ public class EmployeeController(IServiceManager service) : ControllerBase
             service.EmployeeService.CreateEmployeeForCompany(companyId, employee, false);
 
         return CreatedAtRoute("GetEmployeeForCompany", new { companyId, id = employeeToReturn.Id }, employeeToReturn);
+    }
+
+    [HttpPut("{id:guid}")]
+    public IActionResult UpdateEmployeeForCompany(Guid companyId, Guid id, [FromBody] EmployeeForUpdateDto? employee)
+    {
+        if (employee is null) return BadRequest("Employee object is null");
+
+        service.EmployeeService.UpdateEmployeeForCompany(companyId, id, employee, false, true);
+
+        return NoContent();
+    }
+
+    [HttpPatch("{id:guid}")]
+    public IActionResult PartiallyUpdateEmployeeForCompany(Guid companyId, Guid id,
+        [FromBody] JsonPatchDocument<EmployeeForUpdateDto>? patchDoc)
+    {
+        if (patchDoc is null) return BadRequest("Employee object is null");
+
+        var result =
+            service.EmployeeService.GetEmployeeForPatch(companyId, id, false, true);
+
+        patchDoc.ApplyTo(result.employeeToPatch);
+
+        service.EmployeeService.SaveChangesForPatch(result.employeeToPatch, result.employeeEntity);
+
+        return NoContent();
     }
 
     [HttpDelete("{id:guid}")]

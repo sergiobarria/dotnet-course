@@ -1,3 +1,4 @@
+using CompanyEmployees.Core.Domain.Entities;
 using Shared.DataTransferObjects;
 
 namespace CompanyEmployees.Core.Services.Abstractions;
@@ -9,6 +10,15 @@ public interface IEmployeeService
 
     EmployeeDto CreateEmployeeForCompany(Guid companyId, EmployeeForCreationDto employeeForCreationDto,
         bool trackChanges);
+
+    void UpdateEmployeeForCompany(Guid companyId, Guid id, EmployeeForUpdateDto employeeForUpdate,
+        bool compTrackChanges,
+        bool empTrackChanges);
+
+    (EmployeeForUpdateDto employeeToPatch, Employee employeeEntity) GetEmployeeForPatch(Guid companyId, Guid id,
+        bool compTrackChanges, bool empTrackChanges);
+
+    void SaveChangesForPatch(EmployeeForUpdateDto employeeToPatch, Employee employeeEntity);
 
     void DeleteEmployeeForCompany(Guid companyId, Guid id, bool trackChanges);
 }

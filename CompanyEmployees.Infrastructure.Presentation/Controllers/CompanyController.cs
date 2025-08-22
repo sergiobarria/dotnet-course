@@ -53,6 +53,16 @@ public class CompanyController(IServiceManager service) : ControllerBase
         return CreatedAtRoute("CompanyCollection", new { result.ids }, result.companies);
     }
 
+    [HttpPut("{id:guid}")]
+    public IActionResult UpdateCompany(Guid id, [FromBody] CompanyForUpdateDto? companyForUpdate)
+    {
+        if (companyForUpdate is null) return BadRequest("CompanyForUpdate is null");
+
+        service.CompanyService.UpdateCompany(id, companyForUpdate, true);
+
+        return NoContent();
+    }
+
     [HttpDelete("{id:guid}")]
     public IActionResult DeleteCompany(Guid id)
     {
