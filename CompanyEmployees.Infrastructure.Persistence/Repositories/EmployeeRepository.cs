@@ -24,4 +24,21 @@ public class EmployeeRepository(RepositoryContext repositoryContext)
         employee.CompanyId = companyId;
         Create(employee);
     }
+
+    public void DeleteEmployee(Company company, Employee employee)
+    {
+        using var transaction = repositoryContext.Database.BeginTransaction();
+
+        Delete(employee);
+
+        repositoryContext.SaveChanges();
+
+        if (!FindByCondition(e => e.CompanyId == company.Id, false).Any())
+        {
+            repositoryContext.Companies!.Remove(company);
+            repositoryContext.SaveChanges();
+        }
+
+        transaction.Commit();
+    }
 }

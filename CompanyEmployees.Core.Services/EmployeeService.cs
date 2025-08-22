@@ -50,4 +50,15 @@ internal sealed class EmployeeService(IRepositoryManager repository, ILoggerMana
 
         return employeeToReturn;
     }
+
+    public void DeleteEmployeeForCompany(Guid companyId, Guid id, bool trackChanges)
+    {
+        var company = repository.Company.GetCompany(companyId, true);
+        if (company is null) throw new CompanyNotFoundException(companyId);
+
+        var employeeForCompany = repository.Employee.GetEmployee(companyId, id, trackChanges);
+        if (employeeForCompany is null) throw new EmployeeNotFoundException(id);
+
+        repository.Employee.DeleteEmployee(company, employeeForCompany);
+    }
 }
