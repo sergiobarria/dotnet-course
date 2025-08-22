@@ -1,5 +1,6 @@
 using CompanyEmployees.Core.Domain.Entities;
 using CompanyEmployees.Core.Domain.Repositories;
+using CompanyEmployees.Infrastructure.Persistence.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Shared.RequestFeatures;
 
@@ -19,8 +20,10 @@ public class EmployeeRepository(RepositoryContext repositoryContext)
 
         var baseQuery =
             FindByCondition(
-                e => e.CompanyId == companyId && e.Age >= employeeParameters.MinAge &&
-                     e.Age <= employeeParameters.MaxAge, trackChanges).OrderBy(e => e.Name);
+                    e => e.CompanyId.Equals(companyId), trackChanges)
+                .FilterEmployees(employeeParameters.MinAge, employeeParameters.MaxAge)
+                .Search(employeeParameters.SearchTerm)
+                .OrderBy(e => e.Name);
 
         var count = await baseQuery.CountAsync(ct);
 
