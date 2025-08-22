@@ -1,6 +1,8 @@
 using CompanyEmployees;
 using CompanyEmployees.Extensions;
 using CompanyEmployees.Infrastructure.Presentation;
+using CompanyEmployees.Infrastructure.Presentation.Validators;
+using FluentValidation;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
@@ -42,6 +44,8 @@ builder.Services.AddControllers(config =>
     .AddXmlDataContractSerializerFormatters()
     .AddCustomCSVFormatter()
     .AddApplicationPart(typeof(AssemblyReference).Assembly);
+
+builder.Services.AddValidatorsFromAssemblyContaining(typeof(EmployeeForCreationDtoValidator));
 
 builder.Host.UseSerilog((hostContext, configuration) =>
 {

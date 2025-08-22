@@ -1,4 +1,5 @@
 using CompanyEmployees.Core.Services.Abstractions;
+using FluentValidation;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Shared.DataTransferObjects;
@@ -26,9 +27,19 @@ public class EmployeeController(IServiceManager service) : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult CreateEmployeeForCompany(Guid companyId, [FromBody] EmployeeForCreationDto? employee)
+    public IActionResult CreateEmployeeForCompany(Guid companyId, [FromBody] EmployeeForCreationDto? employee,
+        [FromServices] IValidator<EmployeeForManipulationDto> validator)
     {
         if (employee is null) return BadRequest("Employee object is null");
+
+        var validationResult = validator.Validate(employee);
+        if (!validationResult.IsValid) return BadRequest(validationResult.Errors);
+
+        // if (!ModelState.IsValid)
+        // {
+        //     ModelState.AddModelError(string.Empty, "Bad Request sent");
+        //     return UnprocessableEntity(ModelState);
+        // }
 
         var employeeToReturn =
             service.EmployeeService.CreateEmployeeForCompany(companyId, employee, false);
@@ -37,9 +48,14 @@ public class EmployeeController(IServiceManager service) : ControllerBase
     }
 
     [HttpPut("{id:guid}")]
-    public IActionResult UpdateEmployeeForCompany(Guid companyId, Guid id, [FromBody] EmployeeForUpdateDto? employee)
+    public IActionResult UpdateEmployeeForCompany(Guid companyId, Guid id, [FromBody] EmployeeForUpdateDto? employee,
+        [FromServices] IValidator<EmployeeForUpdateDto> validator)
     {
         if (employee is null) return BadRequest("Employee object is null");
+
+        var validationResult = validator.Validate(employee);
+        if (!validationResult.IsValid) return BadRequest(validationResult.Errors);
+        // if (!ModelState.IsValid) return UnprocessableEntity(ModelState);
 
         service.EmployeeService.UpdateEmployeeForCompany(companyId, id, employee, false, true);
 
@@ -55,7 +71,11 @@ public class EmployeeController(IServiceManager service) : ControllerBase
         var result =
             service.EmployeeService.GetEmployeeForPatch(companyId, id, false, true);
 
-        patchDoc.ApplyTo(result.employeeToPatch);
+        patchDoc.ApplyTo(result.employeeToPatch, ModelState);
+
+        TryValidateModel(result.employeeToPatch);
+
+        if (!ModelState.IsValid) return UnprocessableEntity(ModelState);
 
         service.EmployeeService.SaveChangesForPatch(result.employeeToPatch, result.employeeEntity);
 
