@@ -5,21 +5,22 @@ namespace CompanyEmployees.Core.Services.Abstractions;
 
 public interface IEmployeeService
 {
-    Task<IEnumerable<EmployeeDto>> GetEmployeesAsync(Guid companyId, bool trackChanges);
-    Task<EmployeeDto> GetEmployeeAsync(Guid companyId, Guid id, bool trackChanges);
+    Task<IEnumerable<EmployeeDto>> GetEmployeesAsync(Guid companyId, bool trackChanges, CancellationToken ct = default);
+    Task<EmployeeDto> GetEmployeeAsync(Guid companyId, Guid id, bool trackChanges, CancellationToken ct = default);
 
     Task<EmployeeDto> CreateEmployeeForCompanyAsync(Guid companyId, EmployeeForCreationDto employeeForCreationDto,
-        bool trackChanges);
+        bool trackChanges, CancellationToken ct = default);
 
     Task UpdateEmployeeForCompanyAsync(Guid companyId, Guid id, EmployeeForUpdateDto employeeForUpdate,
         bool compTrackChanges,
-        bool empTrackChanges);
+        bool empTrackChanges, CancellationToken ct = default);
 
     Task<(EmployeeForUpdateDto employeeToPatch, Employee employeeEntity)> GetEmployeeForPatchAsync(Guid companyId,
         Guid id,
-        bool compTrackChanges, bool empTrackChanges);
+        bool compTrackChanges, bool empTrackChanges, CancellationToken ct = default);
 
-    Task SaveChangesForPatchAsync(EmployeeForUpdateDto employeeToPatch, Employee employeeEntity);
+    Task SaveChangesForPatchAsync(EmployeeForUpdateDto employeeToPatch, Employee employeeEntity,
+        CancellationToken ct = default);
 
-    Task DeleteEmployeeForCompanyAsync(Guid companyId, Guid id, bool trackChanges);
+    Task DeleteEmployeeForCompanyAsync(Guid companyId, Guid id, bool trackChanges, CancellationToken ct = default);
 }

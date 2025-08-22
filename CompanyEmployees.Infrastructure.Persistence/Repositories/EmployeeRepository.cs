@@ -7,17 +7,21 @@ namespace CompanyEmployees.Infrastructure.Persistence.Repositories;
 public class EmployeeRepository(RepositoryContext repositoryContext)
     : RepositoryBase<Employee>(repositoryContext), IEmployeeRepository
 {
-    public async Task<IEnumerable<Employee>> GetEmployeesAsync(Guid companyId, bool trackChanges)
+    private readonly RepositoryContext _repositoryContext = repositoryContext;
+
+    public async Task<IEnumerable<Employee>> GetEmployeesAsync(Guid companyId, bool trackChanges,
+        CancellationToken ct = default)
     {
         return await FindByCondition(e => e.CompanyId.Equals(companyId), trackChanges)
             .OrderBy(e => e.Name)
-            .ToListAsync();
+            .ToListAsync(ct);
     }
 
-    public async Task<Employee?> GetEmployeeAsync(Guid companyId, Guid id, bool trackChanges)
+    public async Task<Employee?> GetEmployeeAsync(Guid companyId, Guid id, bool trackChanges,
+        CancellationToken ct = default)
     {
         return await FindByCondition(e => e.CompanyId.Equals(companyId) && e.Id.Equals(id), trackChanges)
-            .SingleOrDefaultAsync()!;
+            .SingleOrDefaultAsync(ct)!;
     }
 
     public void CreateEmployeeForCompany(Guid companyId, Employee employee)
@@ -28,16 +32,16 @@ public class EmployeeRepository(RepositoryContext repositoryContext)
 
     public void DeleteEmployee(Company company, Employee employee)
     {
-        using var transaction = repositoryContext.Database.BeginTransaction();
+        using var transaction = _repositoryContext.Database.BeginTransaction();
 
         Delete(employee);
 
-        repositoryContext.SaveChanges();
+        _repositoryContext.SaveChanges();
 
         if (!FindByCondition(e => e.CompanyId == company.Id, false).Any())
         {
-            repositoryContext.Companies!.Remove(company);
-            repositoryContext.SaveChanges();
+            _repositoryContext.Companies!.Remove(company);
+            _repositoryContext.SaveChanges();
         }
 
         transaction.Commit();

@@ -13,8 +13,8 @@ public class RepositoryManager(RepositoryContext repositoryContext) : IRepositor
     public ICompanyRepository Company => _companyRepository.Value;
     public IEmployeeRepository Employee => _employeeRepository.Value;
 
-    public async Task SaveAsync()
+    public async Task SaveAsync(CancellationToken ct = default)
     {
-        await repositoryContext.SaveChangesAsync();
+        await repositoryContext.SaveChangesAsync(ct);
     }
 }
